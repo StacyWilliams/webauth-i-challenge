@@ -13,11 +13,11 @@ server.use(express.json());
 
 server.get('/', (req, res) => {
   res.send("Webauth-i-challenge!");
-});
+});//endpoint works
 
 server.post('/api/register', (req, res) => {
   let user = req.body;
-
+console.log(user)
   const hash = bcrypt.hashSync(user.password, 12);
 
   user.password = hash
@@ -29,12 +29,12 @@ server.post('/api/register', (req, res) => {
     .catch(error => {
       res.status(500).json(error);
     });
-});
+}); //endpoint works
 
 server.post('/api/login', (req, res) => {
   let { username, password } = req.body;
-
-  Users.findBy({ username })
+      console.log({username, password})
+  Users.findBy({username})
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
@@ -46,7 +46,7 @@ server.post('/api/login', (req, res) => {
     .catch(error => {
       res.status(500).json(error);
     });
-});
+}); //endpoint works
 
 server.get('/api/users', (req, res) => {
   Users.find()
@@ -54,7 +54,7 @@ server.get('/api/users', (req, res) => {
       res.json(users);
     })
     .catch(err => res.send(err));
-});
+}); //endpoint works
 
 server.get('/hash', (req, res) => {
   const name = req.query.name;
